@@ -1,5 +1,6 @@
-/// @description Player Movement Variables
+/// @description Player Variables
 player_health = 100;
+player_gears = 0;
 
 // Speed settings
 move_speed = 5;        // Horizontal movement speed
@@ -12,3 +13,6 @@ v_speed = 0;           // Current vertical velocity
 
 // Add to obj_Player Create Event
 facing_dir = 1; // 1 = right, -1 = left
+
+// Making sure the player is on top of everything
+//depth = -bbox_bottom;
