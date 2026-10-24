@@ -20,10 +20,10 @@ function enemy_movement(){
 
 function enemy_gravity(){
     var is_grounded = place_meeting(x, y + 1, obj_Platform);
-    
+
     if (!is_grounded) {
-        enemy_v_speed += enemy_grav; // Apply gravity when in the air
-    } else {
-        enemy_v_speed = 0; 
+        enemy_v_speed += enemy_grav;
+    } else if (enemy_v_speed > 0) {
+        enemy_v_speed = 0;   // only cancel falling, not a jump
     }
 }
