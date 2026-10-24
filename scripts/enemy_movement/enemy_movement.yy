@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"enemy_movement",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"Enemy_Scripts",
+    "path":"folders/Scripts/Enemy_Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
