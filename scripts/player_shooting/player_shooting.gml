@@ -23,3 +23,26 @@ function player_shooting(){
     bullet.speed = 10 * facing_dir;
 }
 }
+
+function player_grenade(){
+    // Charge while G is held
+    if (keyboard_check(ord("G"))) {
+        grenade_charge = min(grenade_charge + 1, grenade_charge_max);
+    }
+
+    // Throw on release
+    if (keyboard_check_released(ord("G"))) {
+        var center_x = x + sprite_width / 2;
+        var dir      = (mouse_x >= center_x) ? 1 : -1;
+        var gren_power    = grenade_charge / grenade_charge_max;   // 0 to 1
+
+        var spawn_x = center_x + dir * (sprite_width / 2 + 10);
+        var spawn_y = y + sprite_height * 0.25;               // roughly shoulder height
+
+        var g = instance_create_layer(spawn_x, spawn_y, "Visible_Instances", obj_Grenade);
+        g.h_speed = dir * lerp(grenade_min_speed, grenade_max_speed, gren_power);
+        g.v_speed = lerp(-8, -14, gren_power);                     // upward toss, stronger when charged
+
+        grenade_charge = 0;
+    }
+}

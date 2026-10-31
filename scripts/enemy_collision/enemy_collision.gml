@@ -27,3 +27,9 @@ function enemy_gravity(){
         enemy_v_speed = 0;   // only cancel falling, not a jump
     }
 }
+
+function enemy_self_destruct(){
+	if (enemy_health <= 0){
+		instance_destroy();
+	}
+}
