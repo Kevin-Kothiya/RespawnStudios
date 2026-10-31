@@ -14,5 +14,7 @@ v_speed = 0;           // Current vertical velocity
 // Add to obj_Player Create Event
 facing_dir = 1; // 1 = right, -1 = left
 
-// Making sure the player is on top of everything
-//depth = -bbox_bottom;
+grenade_charge     = 0;
+grenade_charge_max = 60;   // steps to reach full power (1 second at 60 fps)
+grenade_min_speed  = 4;    // horizontal speed on a quick tap
+grenade_max_speed  = 16;   // horizontal speed at full charge

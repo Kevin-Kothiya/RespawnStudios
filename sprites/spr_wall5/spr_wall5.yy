@@ -1,10 +1,10 @@
 {
   "$GMSprite":"v2",
   "%Name":"spr_wall5",
-  "bboxMode":0,
-  "bbox_bottom":159,
+  "bboxMode":2,
+  "bbox_bottom":153,
   "bbox_left":0,
-  "bbox_right":89,
+  "bbox_right":86,
   "bbox_top":13,
   "collisionKind":1,
   "collisionTolerance":0,

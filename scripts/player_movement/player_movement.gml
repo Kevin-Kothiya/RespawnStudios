@@ -43,3 +43,16 @@ function player_movment(){
 	}
 	y += v_speed; // Apply vertical movement
 }
+
+function player_climb(){
+	// checking to see if the player is colliding with the ladder
+	var in_ladder = place_meeting(x, y, obj_Ladder);
+	
+	if (in_ladder){
+		var go_up = keyboard_check(ord("W"));
+		if (go_up){
+			v_speed = -10;
+		}
+	}
+
+}
