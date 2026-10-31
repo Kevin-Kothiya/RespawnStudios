@@ -1,5 +1,6 @@
 /// @description Player Variables
 player_health = 100;
+player_dps = 10;
 player_gears = 0;
 
 // Speed settings

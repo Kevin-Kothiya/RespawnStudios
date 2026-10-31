@@ -1,6 +1,7 @@
-enemy_health = 100;
-
 /// @description Enemy Properties
+
+enemy_health = 100;
+enemy_damange = 10;
 
 // Speed settings
 enemy_move_speed = 1;        // Horizontal movement speed

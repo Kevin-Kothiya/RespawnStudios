@@ -49,6 +49,7 @@
     {"id":{"name":"enemy_collision","path":"scripts/enemy_collision/enemy_collision.yy",},},
     {"id":{"name":"enemy_movement","path":"scripts/enemy_movement/enemy_movement.yy",},},
     {"id":{"name":"player_coin_collection","path":"scripts/player_coin_collection/player_coin_collection.yy",},},
+    {"id":{"name":"player_damage","path":"scripts/player_damage/player_damage.yy",},},
     {"id":{"name":"player_movement","path":"scripts/player_movement/player_movement.yy",},},
     {"id":{"name":"player_shooting","path":"scripts/player_shooting/player_shooting.yy",},},
     {"id":{"name":"platform","path":"sprites/platform/platform.yy",},},
