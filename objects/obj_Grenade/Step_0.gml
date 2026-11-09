@@ -1,3 +1,9 @@
+
+if (global.game_paused)
+{
+    exit;
+}
+
 // Gravity
 v_speed += grav;
 
