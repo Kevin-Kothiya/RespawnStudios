@@ -16,6 +16,7 @@ function player_movment(){
 	if (!is_grounded) {
 	    v_speed += grav; // Apply gravity when in the air
 	} else {
+		wall_jump = false;
 	    v_speed = 0;     // Reset vertical speed on ground
     
 	    if (jump_key) {
@@ -55,4 +56,18 @@ function player_climb(){
 		}
 	}
 
+}
+
+function player_wall_jump(){
+	var on_wall = place_meeting(x + 1, y + 1, obj_Wall4);
+	
+	if (on_wall && wall_jump == false){
+		var jump_key = keyboard_check(ord("W"));
+		if (jump_key){
+			v_speed = -20;
+			wall_jump = true;
+		}
+		
+	}
+	
 }

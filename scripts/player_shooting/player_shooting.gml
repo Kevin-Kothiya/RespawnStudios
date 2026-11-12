@@ -1,27 +1,39 @@
 function player_shooting(){
-    var center_x = x + sprite_width / 2;
-    var center_y = y + sprite_height / 2;
+    // True center of the player, regardless of sprite origin
+    var center_x = (bbox_left + bbox_right) / 2;
+    var center_y = (bbox_top + bbox_bottom) / 2;
+    var half_w = (bbox_right - bbox_left) / 2;
+    var half_h = (bbox_bottom - bbox_top) / 2;
 
-    // Face the mouse relative to the player's center
-    if (mouse_x > center_x) {
-        facing_dir = 1;
-    } else if (mouse_x < center_x) {
-        facing_dir = -1;
-    }
+    // Full 360-degree aim toward the mouse
+    var aim_dir = point_direction(center_x, center_y, mouse_x, mouse_y);
+
+    // Flip the player left/right only
+    if (mouse_x > center_x) facing_dir = 1;
+    else if (mouse_x < center_x) facing_dir = -1;
 
     var shoot_key = keyboard_check_pressed(ord("K")) || mouse_check_button_pressed(mb_left);
 
     if (shoot_key) {
-	    var spawn_x = center_x + facing_dir * (sprite_width / 2 + 4);
-	    var bullet = instance_create_layer(spawn_x, center_y, "Visible_Instances", obj_Bullet);
+        var dx = lengthdir_x(1, aim_dir);
+        var dy = lengthdir_y(1, aim_dir);
 
-	    // Top-left origin: shift left-facing bullets back by their own width
-	    if (facing_dir == -1) {
-	        bullet.x -= bullet.sprite_width;
+        // Distance from center to the edge of the player's box along the aim direction
+        var dist_x = (abs(dx) > 0.0001) ? half_w / abs(dx) : 99999;
+        var dist_y = (abs(dy) > 0.0001) ? half_h / abs(dy) : 99999;
+
+        // Bullet length without needing an existing instance
+        var bullet_w = sprite_get_width(object_get_sprite(obj_Bullet));
+        var spawn_dist = min(dist_x, dist_y) + (bullet_w / 2) + 4;
+
+        var spawn_x = center_x + dx * spawn_dist;
+        var spawn_y = center_y + dy * spawn_dist;
+
+        var bullet = instance_create_layer(spawn_x, spawn_y, "Visible_Instances", obj_Bullet);
+        bullet.direction   = aim_dir;
+        bullet.image_angle = aim_dir;
+        bullet.speed       = 10;
     }
-
-    bullet.speed = 10 * facing_dir;
-}
 }
 
 function player_grenade(){
