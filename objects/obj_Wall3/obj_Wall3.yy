@@ -10,8 +10,8 @@
     "path":"folders/Objects.yy",
   },
   "parentObjectId":{
-    "name":"obj_Platform3",
-    "path":"objects/obj_Platform3/obj_Platform3.yy",
+    "name":"obj_Platform",
+    "path":"objects/obj_Platform/obj_Platform.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,

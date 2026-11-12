@@ -55,3 +55,25 @@ if (nearest != noone)
         }
     }
 }
+
+
+/// obj_Player - End Step
+// Correct overlap when landing on an enemy
+
+var enemy = instance_place(x, y, obj_Enemy);
+
+if (enemy != noone)
+{
+    // Only correct when Vector is above the enemy
+    // and is falling or no longer moving vertically
+    if (v_speed >= 0 &&
+        bbox_top < enemy.bbox_top &&
+        bbox_bottom > enemy.bbox_top)
+    {
+        // Move Vector onto the enemy's head
+        var overlap = bbox_bottom - enemy.bbox_top;
+
+        y -= overlap;
+        v_speed = 0;
+    }
+}

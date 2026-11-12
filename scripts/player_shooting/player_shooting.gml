@@ -1,6 +1,9 @@
 function player_shooting(){
-    var center_x = x + sprite_width / 2;
-    var center_y = y + sprite_height / 2;
+	// Find the center of Vector's collision box
+	var center_x = (bbox_left + bbox_right) / 2;
+
+	// Position the bullet around Vector's hands/chest
+	var center_y = bbox_top + (bbox_bottom - bbox_top) * 0.55;
 
     // Face the mouse relative to the player's center
     if (mouse_x > center_x) {
@@ -12,7 +15,17 @@ function player_shooting(){
     var shoot_key = keyboard_check_pressed(ord("K")) || mouse_check_button_pressed(mb_left);
 
     if (shoot_key) {
-	    var spawn_x = center_x + facing_dir * (sprite_width / 2 + 4);
+		// Spawn the bullet just outside Vector's collision box
+		var spawn_x;
+
+		if (facing_dir == 1)
+		{
+		    spawn_x = bbox_right + 8;
+		}
+		else
+		{
+		    spawn_x = bbox_left - 8;
+		}
 	    var bullet = instance_create_layer(spawn_x, center_y, "Visible_Instances", obj_Bullet);
 
 	    // Top-left origin: shift left-facing bullets back by their own width

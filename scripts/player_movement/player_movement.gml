@@ -1,7 +1,7 @@
 
 // Script: PlayerFunctions
 
-function player_movment()
+function player_movement()
 {
     // 1. READ INPUTS (WASD + Arrow Keys)
     var move_right = keyboard_check(vk_right) || keyboard_check(ord("D"));
@@ -21,7 +21,8 @@ function player_movment()
 
    
 	// 2. CHECK IF GROUNDED
-	var is_grounded = place_meeting(x, y + 1, obj_Platform);
+
+	var is_grounded = place_meeting(x, y + 1, obj_Platform) || place_meeting(x, y + 1, obj_Enemy);
 
 
 	// 3. CROUCHING WITH COLLISION MASKS
@@ -74,18 +75,77 @@ function player_movment()
 
 	// IMPORTANT:
 	// Check the ground again after changing masks
-	is_grounded = place_meeting(x, y + 1, obj_Platform);
+	
+	is_grounded = place_meeting(x, y + 1, obj_Platform)
+	           || place_meeting(x, y + 1, obj_Enemy);
 
 
-    // 4. SPRINTING
+
+
+
+    // 4. PLAYER ANIMATIONS
+
+    // Get movement direction
     var move_dir = move_right - move_left;
 
-    // Only sprint when moving and not crouching
+    // Check sprinting
     is_sprinting = sprint_key
                 && !is_crouching
                 && move_dir != 0;
 
+    // Remember which way Vector is facing
+    if (move_dir != 0)
+    {
+        facing_dir = move_dir;
+    }
 
+    // Select the correct animation
+    var next_sprite;
+
+    if (is_crouching)
+    {
+        if (move_dir == 0)
+        {
+            // Crouching without moving
+            next_sprite = spr_Vector_CrouchIdle;
+        }
+        else
+        {
+            // Moving while crouching
+            next_sprite = spr_Vector_Mask_Crouch;
+        }
+    }
+    else
+    {
+        if (move_dir == 0)
+        {
+            // Standing without moving
+            next_sprite = spr_Vector_Idle;
+        }
+        else
+        {
+            // Walking or sprinting
+            next_sprite = spr_Vector_Walk;
+        }
+    }
+
+    // Only reset the animation when switching sprites
+    if (sprite_index != next_sprite)
+    {
+        sprite_index = next_sprite;
+        image_index = 0;
+    }
+
+    // Play the selected animation
+    image_speed = 1;
+
+    // Keep Vector facing the correct direction
+    image_xscale = facing_dir * player_scale;
+    image_yscale = player_scale;
+
+
+	
+	
     // 5. MOVEMENT SPEED
     if (is_crouching)
     {
@@ -121,54 +181,111 @@ function player_movment()
     }
 
 
-    // 7. HORIZONTAL COLLISION (Walls)
-    if (h_speed != 0 &&
-        place_meeting(x + h_speed, y, obj_Platform))
-    {
-        // Move pixel-by-pixel until touching the wall
-        while (!place_meeting(
-            x + sign(h_speed), y, obj_Platform))
-        {
-            x += sign(h_speed);
-        }
+    // 7. HORIZONTAL COLLISION (Walls and Enemies)
 
-        h_speed = 0;
-    }
+	if (h_speed != 0 &&
+	    (place_meeting(x + h_speed, y, obj_Platform) ||
+	     place_meeting(x + h_speed, y, obj_Enemy)))
+	{
+	    while (!place_meeting(x + sign(h_speed), y, obj_Platform)
+	        && !place_meeting(x + sign(h_speed), y, obj_Enemy))
+	    {
+	        x += sign(h_speed);
+	    }
 
-    x += h_speed;
+	    h_speed = 0;
+	}
+
+	x += h_speed;
 
 
-    // 8. VERTICAL COLLISION (Floors/Ceilings)
-    if (v_speed != 0 &&
-        place_meeting(x, y + v_speed, obj_Platform))
-    {
-        // Move pixel-by-pixel until touching the surface
-        while (!place_meeting(
-            x, y + sign(v_speed), obj_Platform))
-        {
-            y += sign(v_speed);
-        }
 
-        v_speed = 0;
-    }
 
-    y += v_speed;
+	// 8. VERTICAL COLLISION
+	// Check platforms and enemies
+
+	var remaining = abs(v_speed);
+	var vertical_dir = sign(v_speed);
+
+	// Move in small steps to avoid passing through objects
+	while (remaining > 0)
+	{
+	    var move_y = min(1, remaining) * vertical_dir;
+
+	    var hit_platform = place_meeting(
+	        x, y + move_y, obj_Platform
+	    );
+
+	    var hit_enemy = place_meeting(
+	        x, y + move_y, obj_Enemy
+	    );
+
+	    if (hit_platform || hit_enemy)
+	    {
+	        // Stop when touching a platform or enemy
+	        v_speed = 0;
+	        break;
+	    }
+
+	    y += move_y;
+	    remaining -= abs(move_y);
+	}
+
+
+	// JUMP ANIMATION
+
+	// Check if Vector is on the ground after moving
+	var grounded_after_move =
+	    place_meeting(x, y + 1, obj_Platform)
+	    || place_meeting(x, y + 1, obj_Enemy);
+
+	// Play the jump animation while airborne
+	if (!grounded_after_move)
+	{
+	    if (sprite_index != spr_Vector_Jump)
+	    {
+	        sprite_index = spr_Vector_Jump;
+	    }
+
+	    // Control the frames manually
+	    image_speed = 0;
+
+	    if (v_speed < -9)
+	    {
+	        image_index = 1; // Takeoff
+	    }
+	    else if (v_speed < -5)
+	    {
+	        image_index = 2; // Rising
+	    }
+	    else if (v_speed < -1)
+	    {
+	        image_index = 3; // Near the top
+	    }
+	    else if (v_speed < 2)
+	    {
+	        image_index = 4; // Highest point
+	    }
+	    else
+	    {
+	        image_index = 5; // Falling
+	    }
+	}
 }
-
 
 // 9. LADDER CLIMBING
 function player_climb()
 {
-    // Check if player is colliding with the ladder
-    var in_ladder = place_meeting(x, y, obj_Ladder);
+	// Check if player is colliding with the ladder
+	var in_ladder = place_meeting(x, y, obj_Ladder);
 
-    if (in_ladder)
-    {
-        var go_up = keyboard_check(ord("W"));
+	if (in_ladder)
+	{
+	    var go_up = keyboard_check(ord("W"));
 
-        if (go_up)
-        {
-            v_speed = -10;
-        }
-    }
+	    if (go_up)
+	    {
+	        v_speed = -10;
+	    }
+	}
 }

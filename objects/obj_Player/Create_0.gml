@@ -46,3 +46,28 @@ mask_crouch = spr_Vector_Mask_Crouch;
 
 // Start with the standing collision mask
 mask_index = mask_stand;
+
+// Player walking animation
+sprite_index = spr_Vector_Walk;
+
+image_speed = 0;
+image_index = 0;
+
+// Character size
+player_scale = 0.5;
+
+// Apply the same scale horizontally and vertically
+image_xscale = player_scale;
+image_yscale = player_scale;
+
+
+// MELEE COMBAT SETTINGS
+
+melee_damage = 25;
+melee_range = 45;
+
+melee_cooldown = 0;
+melee_cooldown_max = 18;
+
+// For future melee animations
+melee_attack_timer = 0;
