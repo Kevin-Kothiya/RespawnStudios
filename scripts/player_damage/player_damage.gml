@@ -1,9 +1,22 @@
-function player_damage(){
-	// checking if the player and the enemy have collided
-	var enemy_hit = place_meeting(x + 1, y + 1, obj_Enemy);
-	if (enemy_hit && alarm[0] < 1 && player_health > 0) {
-		player_health -= obj_Enemy.enemy_damange;
-		alarm[0] = 60;
-	}
 
+function player_damage()
+{
+    // Check a small area around the player
+    var enemy_hit = collision_rectangle(
+        bbox_left - 2,
+        bbox_top,
+        bbox_right + 2,
+        bbox_bottom,
+        obj_Enemy,
+        false,
+        true
+    );
+
+    if (enemy_hit != noone &&
+        alarm[0] < 1 &&
+        player_health > 0)
+    {
+        player_health -= enemy_hit.enemy_damage;
+        alarm[0] = 60;
+    }
 }

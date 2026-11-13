@@ -6,6 +6,13 @@ function enemy_movement(){
         }
         enemy_h_speed = 0;
     }
+	
+	// Stop the enemy when it reaches the player
+	if (enemy_h_speed != 0 &&
+	    place_meeting(x + enemy_h_speed, y, obj_Player))
+	{
+	    enemy_h_speed = 0;
+	}
     x += enemy_h_speed;
 
     // VERTICAL COLLISION
