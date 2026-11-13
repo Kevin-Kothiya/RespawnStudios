@@ -60,7 +60,7 @@ if (nearest != noone)
 /// obj_Player - End Step
 // Correct overlap when landing on an enemy
 
-var enemy = instance_place(x, y, obj_Enemy);
+var enemy = instance_place(x, y, par_Enemy);
 
 if (enemy != noone)
 {

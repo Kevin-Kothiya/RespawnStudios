@@ -22,7 +22,7 @@ function player_movement()
    
 	// 2. CHECK IF GROUNDED
 
-	var is_grounded = place_meeting(x, y + 1, obj_Platform) || place_meeting(x, y + 1, obj_Enemy);
+	var is_grounded = place_meeting(x, y + 1, obj_Platform) || place_meeting(x, y + 1, par_Enemy);
 
 
 	// 3. CROUCHING WITH COLLISION MASKS
@@ -77,7 +77,7 @@ function player_movement()
 	// Check the ground again after changing masks
 	
 	is_grounded = place_meeting(x, y + 1, obj_Platform)
-	           || place_meeting(x, y + 1, obj_Enemy);
+	           || place_meeting(x, y + 1, par_Enemy);
 
 
 
@@ -185,10 +185,10 @@ function player_movement()
 
 	if (h_speed != 0 &&
 	    (place_meeting(x + h_speed, y, obj_Platform) ||
-	     place_meeting(x + h_speed, y, obj_Enemy)))
+	     place_meeting(x + h_speed, y, par_Enemy)))
 	{
 	    while (!place_meeting(x + sign(h_speed), y, obj_Platform)
-	        && !place_meeting(x + sign(h_speed), y, obj_Enemy))
+	        && !place_meeting(x + sign(h_speed), y, par_Enemy))
 	    {
 	        x += sign(h_speed);
 	    }
@@ -217,7 +217,7 @@ function player_movement()
 	    );
 
 	    var hit_enemy = place_meeting(
-	        x, y + move_y, obj_Enemy
+	        x, y + move_y, par_Enemy
 	    );
 
 	    if (hit_platform || hit_enemy)
@@ -237,7 +237,7 @@ function player_movement()
 	// Check if Vector is on the ground after moving
 	var grounded_after_move =
 	    place_meeting(x, y + 1, obj_Platform)
-	    || place_meeting(x, y + 1, obj_Enemy);
+	    || place_meeting(x, y + 1, par_Enemy);
 
 	// Play the jump animation while airborne
 	if (!grounded_after_move)

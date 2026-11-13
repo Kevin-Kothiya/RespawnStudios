@@ -1,7 +1,6 @@
 
-/// obj_Bullet - Collision with obj_Enemy
+/// obj_Bullet - Collision with par_Enemy
 
-// Don't process collisions while paused
 if (variable_global_exists("game_paused"))
 {
     if (global.game_paused)
@@ -10,11 +9,9 @@ if (variable_global_exists("game_paused"))
     }
 }
 
-// 'other' is the enemy hit by this bullet
 if (instance_exists(other))
 {
     other.take_damage(bullet_damage);
 }
 
-// Destroy the bullet after impact
 instance_destroy();

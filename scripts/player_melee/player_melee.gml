@@ -60,7 +60,7 @@ function player_melee()
             attack_top,
             attack_right,
             attack_bottom,
-            obj_Enemy,
+            par_Enemy,
             false,
             true
         );

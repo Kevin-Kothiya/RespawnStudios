@@ -26,7 +26,7 @@ player_melee();
 // Check if Vector is on the ground
 var grounded_after_move =
     place_meeting(x, y + 1, obj_Platform)
-    || place_meeting(x, y + 1, obj_Enemy);
+    || place_meeting(x, y + 1, par_Enemy);
 
 // Only use the jump sprite when airborne
 if (!grounded_after_move)

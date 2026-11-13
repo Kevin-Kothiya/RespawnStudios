@@ -7,7 +7,7 @@ function player_damage()
         bbox_top,
         bbox_right + 2,
         bbox_bottom,
-        obj_Enemy,
+        par_Enemy,
         false,
         true
     );
