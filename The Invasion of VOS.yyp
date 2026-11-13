@@ -58,6 +58,7 @@
     {"id":{"name":"obj_Wall4","path":"objects/obj_Wall4/obj_Wall4.yy",},},
     {"id":{"name":"obj_Wall5","path":"objects/obj_Wall5/obj_Wall5.yy",},},
     {"id":{"name":"Main_Menu","path":"rooms/Main_Menu/Main_Menu.yy",},},
+    {"id":{"name":"prison_lvl3","path":"rooms/prison_lvl3/prison_lvl3.yy",},},
     {"id":{"name":"Test_Room","path":"rooms/Test_Room/Test_Room.yy",},},
     {"id":{"name":"enemy_collision","path":"scripts/enemy_collision/enemy_collision.yy",},},
     {"id":{"name":"enemy_movement","path":"scripts/enemy_movement/enemy_movement.yy",},},
@@ -126,6 +127,7 @@
   "RoomOrderNodes":[
     {"roomId":{"name":"Main_Menu","path":"rooms/Main_Menu/Main_Menu.yy",},},
     {"roomId":{"name":"Test_Room","path":"rooms/Test_Room/Test_Room.yy",},},
+    {"roomId":{"name":"prison_lvl3","path":"rooms/prison_lvl3/prison_lvl3.yy",},},
   ],
   "templateType":"game",
   "TextureGroups":[
