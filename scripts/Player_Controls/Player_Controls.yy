@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"player_damage",
+  "%Name":"Player_Controls",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"player_damage",
+  "name":"Player_Controls",
   "parent":{
-    "name":"Player_Scripts",
-    "path":"folders/Scripts/Player_Scripts.yy",
+    "name":"Tutorial_Script",
+    "path":"folders/Scripts/Tutorial_Script.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
