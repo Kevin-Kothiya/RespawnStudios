@@ -22,3 +22,6 @@ grenade_max_speed  = 16;   // horizontal speed at full charge
 
 // Player's wall jump ability
 wall_jump = false;
+
+// If the player has completed the tutorial
+tutorial = false;

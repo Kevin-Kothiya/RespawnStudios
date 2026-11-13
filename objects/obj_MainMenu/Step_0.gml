@@ -70,7 +70,7 @@ if (menu_panel == 0) {
         switch (selected) {
 
             case 0: // START
-                room_goto(Test_Room);
+                room_goto(Tutorial_Level);
                 break;
 
             case 1: // CONTINUE

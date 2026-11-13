@@ -1,4 +1,4 @@
-// Script: PlayerFunctions
+ // Script: PlayerFunctions
 function player_movment(){
 	// 1. READ INPUTS (WASD + Arrow Keys)
 	var move_right = keyboard_check(vk_right) || keyboard_check(ord("D"));
@@ -59,9 +59,10 @@ function player_climb(){
 }
 
 function player_wall_jump(){
-	var on_wall = place_meeting(x + 1, y + 1, obj_Wall4);
+	var on_wall_right = place_meeting(x + 1, y + 1, obj_Wall4);
+	var on_wall_left = place_meeting(x - 1, y - 1, obj_Wall4);
 	
-	if (on_wall && wall_jump == false){
+	if ((on_wall_right || on_wall_left) && wall_jump == false){
 		var jump_key = keyboard_check(ord("W"));
 		if (jump_key){
 			v_speed = -20;
