@@ -14,6 +14,7 @@ if (instance_exists(obj_ObjectiveManager))
 
 
 player_movement();
+player_wall_jump();
 player_coin_collection();
 player_shooting();
 player_grenade();
