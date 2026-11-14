@@ -41,7 +41,7 @@ if (instance_exists(obj_Player)) {
             var bx = x + lengthdir_x(muzzle_dist, aim_dir);
             var by = y + lengthdir_y(muzzle_dist, aim_dir);
 
-            var b = instance_create_layer(bx, by, layer, obj_Enemy_Bullet);
+            var b = instance_create_depth(bx, by, depth, obj_Enemy_Bullet);
             b.direction   = aim_dir;
             b.image_angle = aim_dir;
             b.speed       = bullet_speed;
