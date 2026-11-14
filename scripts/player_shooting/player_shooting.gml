@@ -29,7 +29,7 @@ function player_shooting(){
         var spawn_x = center_x + dx * spawn_dist;
         var spawn_y = center_y + dy * spawn_dist;
 
-        var bullet = instance_create_layer(spawn_x, spawn_y, "Visible_Instances", obj_Bullet);
+        var bullet = instance_create_layer(spawn_x, spawn_y, layer, obj_Bullet);
         bullet.direction   = aim_dir;
         bullet.image_angle = aim_dir;
         bullet.speed       = 10;
@@ -51,7 +51,7 @@ function player_grenade(){
         var spawn_x = center_x + dir * (sprite_width / 2 + 10);
         var spawn_y = y + sprite_height * 0.25;               // roughly shoulder height
 
-        var g = instance_create_layer(spawn_x, spawn_y, "Visible_Instances", obj_Grenade);
+        var g = instance_create_layer(spawn_x, spawn_y, layer, obj_Grenade);
         g.h_speed = dir * lerp(grenade_min_speed, grenade_max_speed, gren_power);
         g.v_speed = lerp(-8, -14, gren_power);                     // upward toss, stronger when charged
 

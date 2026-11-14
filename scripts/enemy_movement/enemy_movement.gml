@@ -127,16 +127,9 @@ function enemy_can_see_player(px, py, dist){
     var eye_x = (bbox_left + bbox_right) / 2;
     var eye_y = bbox_top + 30;   // roughly head height
 
-    // Enemy and player are children of obj_Platform, so ignore both
-    var hits = ds_list_create();
-    var n = collision_line_list(eye_x, eye_y, px, py, obj_Platform, false, true, hits, false);
-    var clear = true;
-    for (var i = 0; i < n; i++) {
-        var o = hits[| i];
-        if (o != id && o != obj_Player.id) { clear = false; break; }
-    }
-    ds_list_destroy(hits);
-    return clear;
+    // Only walls/floors are part of obj_Platform. The player and enemies
+    // are separate objects, so a clear line has no platform collision.
+    return collision_line(eye_x, eye_y, px, py, obj_Platform, false, true) == noone;
 }
 
 /// Fires one bullet from the enemy's center toward the player, at any angle
@@ -152,7 +145,7 @@ function enemy_shoot(cx, cy, px, py){
     var dist_y = (abs(dy) > 0.0001) ? half_h / abs(dy) : 99999;
     var spawn_dist = min(dist_x, dist_y) + 25 + 6;   // 25 = half the bullet's width
 
-    var b = instance_create_layer(cx + dx * spawn_dist, cy + dy * spawn_dist, "Visible_Instances", obj_Enemy_Bullet);
+    var b = instance_create_layer(cx + dx * spawn_dist, cy + dy * spawn_dist, layer, obj_Enemy_Bullet);
     b.direction   = aim;
     b.image_angle = aim;
     b.speed       = bullet_speed;

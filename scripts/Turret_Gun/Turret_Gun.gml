@@ -29,22 +29,9 @@ if (instance_exists(obj_Player)) {
     var target = point_direction(x, y, px, py);
     var mx = x + lengthdir_x(muzzle_dist, target);
     var my = y + lengthdir_y(muzzle_dist, target);
-    var blocked = collision_line(mx, my, px, py, obj_Platform, false, true);
-	
-	in_range = point_distance(x, y, px, py) <= sight_range;
-
-	// Collect everything on the line, then ignore the player
-	var hits = ds_list_create();
-	var n = collision_line_list(mx, my, px, py, obj_Platform, false, true, hits, false);
-
-	blocker = noone;
-	for (var i = 0; i < n; i++) {
-	    if (hits[| i] != obj_Player.id) { blocker = hits[| i]; break; }
-	}
-	ds_list_destroy(hits);
-
-	can_see = in_range && (blocker == noone || !use_line_of_sight);
-
+    // Platforms/walls block turret line of sight. Player isn't a platform child.
+    blocker = collision_line(mx, my, px, py, obj_Platform, false, true);
+    can_see = in_range && (!use_line_of_sight || blocker == noone);
 
     if (can_see) {
         var diff = angle_difference(target, aim_dir);
@@ -54,7 +41,7 @@ if (instance_exists(obj_Player)) {
             var bx = x + lengthdir_x(muzzle_dist, aim_dir);
             var by = y + lengthdir_y(muzzle_dist, aim_dir);
 
-            var b = instance_create_layer(bx, by, "Visible_Instances", obj_Enemy_Bullet);
+            var b = instance_create_depth(bx, by, depth, obj_Enemy_Bullet);
             b.direction   = aim_dir;
             b.image_angle = aim_dir;
             b.speed       = bullet_speed;
@@ -66,5 +53,5 @@ if (instance_exists(obj_Player)) {
 
 	image_angle  = aim_dir;
 	image_yscale = (lengthdir_x(1, aim_dir) < 0) ? -1 : 1;
-	
+
 }

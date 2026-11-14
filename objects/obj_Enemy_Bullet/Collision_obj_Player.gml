@@ -1,6 +1,8 @@
-instance_destroy();
+// Damage only the player instance hit by this projectile.
+if (variable_global_exists("game_paused") && global.game_paused) exit;
 
-// Does some damage to the player
-if (obj_Player.player_health > 0){
-	obj_Player.player_health -= bullet_damage;
+if (instance_exists(other))
+{
+    other.player_health = max(0, other.player_health - bullet_damage);
 }
+instance_destroy();
