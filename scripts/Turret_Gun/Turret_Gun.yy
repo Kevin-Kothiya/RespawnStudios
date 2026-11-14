@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"Turret_Gun",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"Turret_Gun",
+  "parent":{
+    "name":"Turret_Scripts",
+    "path":"folders/Scripts/Turret_Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

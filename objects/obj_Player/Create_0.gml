@@ -71,3 +71,31 @@ melee_cooldown_max = 18;
 
 // For future melee animations
 melee_attack_timer = 0;
+
+// Pierre's tutorial and wall-jump feature (kept separate from platform inheritance)
+wall_jump = false;
+tutorial = false;
+
+// Reset tutorial prompts whenever a fresh tutorial room starts.
+if (room == Tutorial_Level)
+{
+    global.next = false;
+    global.move_to_projectiles = false;
+    global.special_mechanic = false;
+    global.done = false;
+    global.pressed_w = false;
+    global.pressed_a = false;
+    global.pressed_d = false;
+    global.clicked_mouse = false;
+    global.pressed_g = false;
+    global.line = 0;
+    global.timer = 5 * game_get_speed(gamespeed_fps);
+}
+
+// Optional spawn coordinates passed by the tutorial exit to the next room.
+if (variable_global_exists("vos_spawn_pending") && global.vos_spawn_pending)
+{
+    x = global.vos_spawn_x;
+    y = global.vos_spawn_y;
+    global.vos_spawn_pending = false;
+}

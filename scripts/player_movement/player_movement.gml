@@ -164,6 +164,9 @@ function player_movement()
     h_speed = move_dir * move_speed;
 
 
+    // A new landing allows another wall jump.
+    if (is_grounded) wall_jump = false;
+
     // 6. GRAVITY & JUMPING
     if (!is_grounded)
     {
@@ -288,4 +291,24 @@ function player_climb()
 	        v_speed = -10;
 	    }
 	}
+}
+
+
+// Pierre's wall jump, adapted to the current platform collision family.
+function player_wall_jump()
+{
+    if (wall_jump) return;
+    if (place_meeting(x, y + 1, obj_Platform)) return; // normal jump when grounded
+
+    var touching_left  = place_meeting(x - 2, y, obj_Platform);
+    var touching_right = place_meeting(x + 2, y, obj_Platform);
+    var pressed_jump = keyboard_check_pressed(ord("W"))
+                    || keyboard_check_pressed(vk_space)
+                    || keyboard_check_pressed(vk_up);
+
+    if ((touching_left || touching_right) && pressed_jump)
+    {
+        v_speed = -20;
+        wall_jump = true;
+    }
 }

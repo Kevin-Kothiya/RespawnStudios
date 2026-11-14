@@ -12,6 +12,18 @@ enemy_grav = 0.4;            // Gravity applied per frame
 enemy_h_speed = 0;           // Current horizontal velocity
 enemy_v_speed = 0;           // Current vertical velocity
 
+// Shared AI state (required by Pierre's ranged/jumping enemy AI)
+enemy_jump_cooldown = 0;
+enemy_air_dir = 1;
+sight_range = 900;
+keep_distance = 450;
+fire_rate = 75;
+fire_timer = 0;
+bullet_speed = 8;
+enemy_patrol_dir = 1;
+enemy_commit_dir = 0;
+enemy_commit_timer = 0;
+
 
 // ========================================
 // CENTRALIZED ENEMY DAMAGE AND DEATH

@@ -118,3 +118,9 @@ if (!is_paused && !is_talking && instance_exists(interact_target))
     draw_set_color(c_white);
     draw_set_alpha(1);
 }
+
+// Pierre's tutorial instructions, rendered in GUI coordinates.
+if (room == Tutorial_Level)
+{
+    Show_Controls();
+}

@@ -1,40 +1,39 @@
 function player_shooting(){
-	// Find the center of Vector's collision box
-	var center_x = (bbox_left + bbox_right) / 2;
+    // True center of the player, regardless of sprite origin
+    var center_x = (bbox_left + bbox_right) / 2;
+    var center_y = (bbox_top + bbox_bottom) / 2;
+    var half_w = (bbox_right - bbox_left) / 2;
+    var half_h = (bbox_bottom - bbox_top) / 2;
 
-	// Position the bullet around Vector's hands/chest
-	var center_y = bbox_top + (bbox_bottom - bbox_top) * 0.55;
+    // Full 360-degree aim toward the mouse
+    var aim_dir = point_direction(center_x, center_y, mouse_x, mouse_y);
 
-    // Face the mouse relative to the player's center
-    if (mouse_x > center_x) {
-        facing_dir = 1;
-    } else if (mouse_x < center_x) {
-        facing_dir = -1;
-    }
+    // Flip the player left/right only
+    if (mouse_x > center_x) facing_dir = 1;
+    else if (mouse_x < center_x) facing_dir = -1;
 
     var shoot_key = keyboard_check_pressed(ord("K")) || mouse_check_button_pressed(mb_left);
 
     if (shoot_key) {
-		// Spawn the bullet just outside Vector's collision box
-		var spawn_x;
+        var dx = lengthdir_x(1, aim_dir);
+        var dy = lengthdir_y(1, aim_dir);
 
-		if (facing_dir == 1)
-		{
-		    spawn_x = bbox_right + 8;
-		}
-		else
-		{
-		    spawn_x = bbox_left - 8;
-		}
-	    var bullet = instance_create_layer(spawn_x, center_y, "Visible_Instances", obj_Bullet);
+        // Distance from center to the edge of the player's box along the aim direction
+        var dist_x = (abs(dx) > 0.0001) ? half_w / abs(dx) : 99999;
+        var dist_y = (abs(dy) > 0.0001) ? half_h / abs(dy) : 99999;
 
-	    // Top-left origin: shift left-facing bullets back by their own width
-	    if (facing_dir == -1) {
-	        bullet.x -= bullet.sprite_width;
+        // Bullet length without needing an existing instance
+        var bullet_w = sprite_get_width(object_get_sprite(obj_Bullet));
+        var spawn_dist = min(dist_x, dist_y) + (bullet_w / 2) + 4;
+
+        var spawn_x = center_x + dx * spawn_dist;
+        var spawn_y = center_y + dy * spawn_dist;
+
+        var bullet = instance_create_layer(spawn_x, spawn_y, layer, obj_Bullet);
+        bullet.direction   = aim_dir;
+        bullet.image_angle = aim_dir;
+        bullet.speed       = 10;
     }
-
-    bullet.speed = 10 * facing_dir;
-}
 }
 
 function player_grenade(){
@@ -52,7 +51,7 @@ function player_grenade(){
         var spawn_x = center_x + dir * (sprite_width / 2 + 10);
         var spawn_y = y + sprite_height * 0.25;               // roughly shoulder height
 
-        var g = instance_create_layer(spawn_x, spawn_y, "Visible_Instances", obj_Grenade);
+        var g = instance_create_layer(spawn_x, spawn_y, layer, obj_Grenade);
         g.h_speed = dir * lerp(grenade_min_speed, grenade_max_speed, gren_power);
         g.v_speed = lerp(-8, -14, gren_power);                     // upward toss, stronger when charged
 
